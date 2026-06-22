@@ -121,6 +121,65 @@ export const Payment = () => {
     );
   }
 
+  if (currentUser?.isPremium && !searchParams.get("session_id")) {
+    return (
+      <div className="min-h-screen bg-transparent text-slate-800 dark:text-slate-200 py-12 px-4 flex flex-col justify-center items-center bg-grid-pattern">
+        <div className="glass-card rounded-3xl p-8 sm:p-12 text-center max-w-2xl mx-auto space-y-6 relative overflow-hidden shadow-2xl shadow-indigo-950/20 border border-amber-500/30">
+          <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/10 rounded-full blur-2xl pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-32 h-32 bg-primary/10 rounded-full blur-2xl pointer-events-none" />
+
+          <div className="w-16 h-16 rounded-full bg-amber-500/15 text-amber-500 border border-amber-500/25 flex items-center justify-center mx-auto animate-bounce">
+            <Crown size={32} className="fill-amber-500" />
+          </div>
+
+          <div className="space-y-2">
+            <span className="inline-flex items-center gap-1 bg-amber-500/10 border border-amber-500/30 text-amber-500 py-1 px-3 rounded-full text-xs font-bold uppercase tracking-wider font-mono">
+              Premium Active
+            </span>
+            <h2 className="font-display font-extrabold text-2xl sm:text-3xl text-slate-900 dark:text-white">
+              You are already upgraded to Premium!
+            </h2>
+            <p className="text-slate-650 dark:text-slate-400 text-xs max-w-md mx-auto leading-relaxed">
+              Hello <strong>{currentUser.name}</strong>, your account has active premium privileges with lifetime access to all platform perks.
+            </p>
+          </div>
+
+          {/* Benefits Showcase Grid */}
+          <div className="border-t border-slate-205 dark:border-slate-800 pt-6 space-y-4">
+            <p className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase font-mono tracking-wider text-left">
+              Active Premium Benefits Checklist:
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
+              {benefits.map((benefit, i) => (
+                <div key={i} className="flex gap-3 items-start p-3 bg-white/50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-850 rounded-xl">
+                  <div className="w-5 h-5 rounded-full bg-emerald-500/15 flex items-center justify-center shrink-0 text-emerald-500">
+                    <Check size={12} />
+                  </div>
+                  <span className="text-xs text-slate-700 dark:text-slate-350 leading-normal">{benefit}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="pt-6 border-t border-slate-205 dark:border-slate-805 flex flex-col sm:flex-row gap-3 justify-center text-xs">
+            <button
+              onClick={() => router.push("/dashboard")}
+              className="bg-primary hover:bg-primary/95 text-white py-2.5 px-6 rounded-lg font-bold transition shadow-lg shadow-primary/20"
+            >
+              Go to Dashboard
+            </button>
+            <button
+              onClick={() => router.push("/")}
+              className="bg-slate-205 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 py-2.5 px-6 rounded-lg font-bold transition"
+            >
+              Return Home
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-transparent text-slate-800 dark:text-slate-200 py-12 px-4 sm:px-6 lg:px-8 bg-grid-pattern flex flex-col justify-center items-center">
       <div className="max-w-4xl mx-auto w-full">
