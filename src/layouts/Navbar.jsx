@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import { useApp } from "../context/AppContext";
@@ -32,6 +32,11 @@ export const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showImpersonateDrop, setShowImpersonateDrop] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const getNotifications = () => {
     if (!currentUser) return [];
@@ -182,13 +187,17 @@ export const Navbar = () => {
             {
     /* Theme Toggle */
   }
-            <button
-    onClick={toggleTheme}
-    className="p-2 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors"
-    title="Toggle Theme"
-  >
-              {theme === "dark" ? <Sun className="w-5 h-5 text-amber-500" /> : <Moon className="w-5 h-5" />}
-            </button>
+            {mounted ? (
+              <button
+                onClick={toggleTheme}
+                className="p-2 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors"
+                title="Toggle Theme"
+              >
+                {theme === "dark" ? <Sun className="w-5 h-5 text-amber-500" /> : <Moon className="w-5 h-5" />}
+              </button>
+            ) : (
+              <div className="w-9 h-9" />
+            )}
 
             {
     /* Notification drop */
@@ -295,12 +304,16 @@ export const Navbar = () => {
     /* Menubar for mobile */
   }
           <div className="flex items-center md:hidden gap-3">
-            <button
-    onClick={toggleTheme}
-    className="p-2 rounded-lg text-slate-500 dark:text-slate-400"
-  >
-              {theme === "dark" ? <Sun className="w-4 h-4 text-amber-500" /> : <Moon className="w-4 h-4" />}
-            </button>
+            {mounted ? (
+              <button
+                onClick={toggleTheme}
+                className="p-2 rounded-lg text-slate-500 dark:text-slate-400"
+              >
+                {theme === "dark" ? <Sun className="w-4 h-4 text-amber-500" /> : <Moon className="w-4 h-4" />}
+              </button>
+            ) : (
+              <div className="w-8 h-8" />
+            )}
             <button
     onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
     className="p-2 text-slate-600 dark:text-slate-300"
