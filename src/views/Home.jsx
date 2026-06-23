@@ -72,10 +72,10 @@ export const Home = () => {
         transition={{ duration: 0.6 }}
         className="inline-flex items-center gap-2 bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-full py-1.5 px-4 mb-6 hover:border-indigo-500/30 transition-colors"
       >
-        <Sparkles className="w-4 h-4 text-amber-450 text-amber-400" />
+        {/* <Sparkles className="w-4 h-4 text-amber-450 text-amber-400" />
         <span className="text-xs font-semibold tracking-wide text-slate-650 dark:text-slate-300">
           The Hub of High-Growth Teams — Now in Active Sandbox Mode
-        </span>
+        </span> */}
       </motion.div>
 
       {
