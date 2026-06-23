@@ -32,7 +32,7 @@ export const BrowseStartups = () => {
           <div className="mb-10 text-center md:text-left">
             <div className="inline-flex items-center gap-1.5 bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 py-1 px-3 rounded-full text-xs font-semibold mb-4">
               <Sparkles size={12} />
-              {/* <span>Active Sandbox database: {approvedStartups.length} startups approved</span> */}
+              <span>Active Sandbox database: {approvedStartups.length} startups approved</span>
             </div>
             <h1 className="font-display font-extrabold text-3xl sm:text-4xl text-slate-900 dark:text-white">
               Discover Tech Companies
