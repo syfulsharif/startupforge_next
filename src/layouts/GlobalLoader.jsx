@@ -15,7 +15,7 @@ export const GlobalLoader = () => {
         Forging Workspace...
       </p>
       <p className="text-xs text-slate-500 dark:text-slate-400 mt-2">
-        Authenticating & Loading Data
+        Securing connection and loading profile context...
       </p>
     </div>
   );
