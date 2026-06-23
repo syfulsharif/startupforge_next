@@ -298,11 +298,7 @@ This project is pre-configured for zero-config Vercel deployment using the **Nex
 
 ---
 
-## 📄 License
 
-This project was created for **Programming Hero — Batch 13 Assignment 10**. All rights reserved.
-
----
 
 <div align="center">
 
