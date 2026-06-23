@@ -17,12 +17,12 @@ export default function Providers({ children }) {
         <div className="absolute top-[40%] left-[80%] w-[350px] h-[350px] bg-indigo-500/10 rounded-full blur-[130px] pointer-events-none z-0" />
 
         {/* Navigation Bar */}
-        <div className="relative z-50">
+        <div className="fixed top-0 inset-x-0 z-50">
           <Navbar />
         </div>
 
         {/* Core Layout Main */}
-        <main className="flex-grow flex flex-col relative z-10">
+        <main className="flex-grow flex flex-col relative z-10 pt-16">
           {children}
         </main>
 
