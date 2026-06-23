@@ -7,12 +7,11 @@ export const NotFound = () => {
       <div className="max-w-md space-y-6">
         
         {/* Visual Illustration */}
-        <div className="flex justify-center mx-auto animate-pulse">
-          <img 
-            src="/404_illustration.png" 
-            alt="404 Illustration" 
-            className="w-48 h-48 rounded-2xl object-cover shadow-2xl shadow-rose-500/20"
-          />
+        <div className="flex justify-center mx-auto">
+          <div className="w-32 h-32 rounded-3xl bg-gradient-to-tr from-rose-500/20 to-orange-500/20 border border-rose-500/30 flex items-center justify-center relative shadow-2xl shadow-rose-500/10">
+            <div className="absolute inset-0 bg-rose-500/5 rounded-3xl animate-ping opacity-75"></div>
+            <div className="text-rose-500 font-display font-extrabold text-5xl">404</div>
+          </div>
         </div>
 
         <div className="space-y-2">
