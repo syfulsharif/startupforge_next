@@ -3,7 +3,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 
 const AppContext = createContext(undefined);
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || process.env.VITE_API_URL || 'http://localhost:5000/api';
+const API_URL = process.env.NEXT_PUBLIC_API_URL || process.env.VITE_API_URL || (process.env.NODE_ENV === "production" ? "https://startup-forge-backend.vercel.app/api" : "http://localhost:5000/api");
 
 export const AppProvider = ({ children }) => {
   // Theme state
