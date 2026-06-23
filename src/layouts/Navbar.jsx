@@ -25,7 +25,8 @@ export const Navbar = () => {
     usersList,
     startups,
     applications,
-    logout
+    logout,
+    addToast
   } = useApp();
   const router = useRouter();
   const pathname = usePathname();
@@ -134,6 +135,7 @@ export const Navbar = () => {
   };
   const handleLogout = () => {
     logout();
+    if (addToast) addToast("Logged out successfully.", "success");
     router.push("/");
   };
   const handleImpersonate = (userId) => {
