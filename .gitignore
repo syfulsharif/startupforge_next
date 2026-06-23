@@ -72,3 +72,5 @@ desktop.ini
 .parcel-cache
 .turbo/
 .vercel
+.env.production
+.env.vercel
