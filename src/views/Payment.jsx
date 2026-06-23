@@ -284,11 +284,23 @@ export const Payment = () => {
                   )}
                   <button
                     type="submit"
-                    disabled={loading || !currentUser || currentUser?.isPremium}
+                    disabled={loading || (currentUser && currentUser?.isPremium)}
+                    onClick={(e) => {
+                      if (!currentUser) {
+                        e.preventDefault();
+                        router.push("/login?redirect=/payment");
+                      }
+                    }}
                     className="w-full bg-gradient-to-tr from-amber-500 to-orange-500 hover:brightness-110 disabled:opacity-40 text-slate-950 font-black py-3 rounded-lg text-xs transition flex items-center justify-center gap-1 border-0 cursor-pointer"
                   >
                     <Flame size={14} className="fill-slate-950" />
-                    <span>{currentUser?.isPremium ? "Already Premium" : `Checkout on Stripe ($ ${selectedPlanPrice})`}</span>
+                    <span>
+                      {!currentUser 
+                        ? "Log In to Subscribe" 
+                        : currentUser?.isPremium 
+                          ? "Already Premium" 
+                          : `Checkout on Stripe ($ ${selectedPlanPrice})`}
+                    </span>
                   </button>
                 </div>
 
