@@ -20,9 +20,9 @@ export const Footer = () => {
           Unifying visionary startup founders with specialized collaborators to engineer the next generation of industry builders. Empowering remote teamwork from zero to Seed.
         </p>
         <div className="flex items-center gap-3 mt-2 text-slate-400">
-          <a href="#" className="hover:text-primary transition-colors"><Twitter size={16} /></a>
-          <a href="#" className="hover:text-primary transition-colors"><Linkedin size={16} /></a>
-          <a href="#" className="hover:text-primary transition-colors"><Github size={16} /></a>
+          <a href="https://twitter.com/startupforge" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors"><Twitter size={16} /></a>
+          <a href="https://linkedin.com/company/startupforge" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors"><Linkedin size={16} /></a>
+          <a href="https://github.com/startupforge" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors"><Github size={16} /></a>
         </div>
       </div>
 
