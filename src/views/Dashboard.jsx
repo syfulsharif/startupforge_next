@@ -122,6 +122,7 @@ export const Dashboard = () => {
   const [startupWebsite, setStartupWebsite] = useState(myActiveStartup ? myActiveStartup.website : "https://");
   const [startupPitch, setStartupPitch] = useState(myActiveStartup ? myActiveStartup.pitch : "");
   const [startupTeamSize, setStartupTeamSize] = useState(myActiveStartup ? myActiveStartup.teamSizeNeeded || 1 : 1);
+  const [startupFounderEmail, setStartupFounderEmail] = useState(myActiveStartup ? myActiveStartup.founderEmail : currentUser?.email || "");
   const [startupFormFeedback, setStartupFormFeedback] = useState("");
   const [oppTitle, setOppTitle] = useState("");
   const [oppSkills, setOppSkills] = useState("");
@@ -147,8 +148,9 @@ export const Dashboard = () => {
       setStartupPitch(myActiveStartup.pitch);
       setStartupDescription(myActiveStartup.description);
       setStartupTeamSize(myActiveStartup.teamSizeNeeded || 1);
+      setStartupFounderEmail(myActiveStartup.founderEmail || currentUser?.email || "");
     }
-  }, [myActiveStartup]);
+  }, [myActiveStartup, currentUser]);
 
   const handleStartupSubmit = (e) => {
     e.preventDefault();
@@ -168,6 +170,7 @@ export const Dashboard = () => {
         location: startupLocation,
         website: startupWebsite,
         pitch: startupPitch,
+        founderEmail: startupFounderEmail,
         teamSizeNeeded: Number(startupTeamSize)
       };
       updateStartup(updated);
@@ -182,6 +185,7 @@ export const Dashboard = () => {
         location: startupLocation,
         website: startupWebsite,
         pitch: startupPitch,
+        founderEmail: startupFounderEmail,
         teamSizeNeeded: Number(startupTeamSize)
       });
       setStartupFormFeedback("Success: Startup created under review badge.");
