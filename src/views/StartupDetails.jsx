@@ -20,7 +20,7 @@ export const StartupDetails = () => {
         <AlertCircle className="w-16 h-16 text-rose-500 mb-4" />
         <h2 className="font-display font-bold text-2xl">Startup Not Found</h2>
         <p className="text-xs text-slate-600 dark:text-slate-400 mt-2">The company record may have been removed or is pending approval.</p>
-        <Link href="/startups" className="mt-6 bg-primary text-white py-2 px-4 rounded text-xs">Back to List</Link>
+        <Link href="/startups" className="mt-6 bg-primary hover:bg-primary/90 text-white py-2.5 px-6 rounded-lg text-xs font-bold transition shadow-lg shadow-primary/20 cursor-pointer">Back to List</Link>
       </div>;
   }
   const relatedOpp = opportunities.filter((o) => o.startupId === startup.id);
