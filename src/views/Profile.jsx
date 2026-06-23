@@ -20,6 +20,16 @@ export const Profile = () => {
     }
   }, [authLoading, currentUser, router]);
 
+  useEffect(() => {
+    if (currentUser) {
+      setUserName(currentUser.name || "");
+      setUserBio(currentUser.bio || "");
+      setUserSkills(currentUser.skills ? currentUser.skills.join(", ") : "");
+      setUserExperience(currentUser.experience || "");
+      setUserAvatar(currentUser.avatar || "");
+    }
+  }, [currentUser]);
+
   const handleAvatarUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
