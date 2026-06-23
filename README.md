@@ -38,6 +38,7 @@ The platform is built on a **Next.js App Router** architecture, backed by an **E
 
 ### 👤 Authentication & Accounts
 - **JWT-based auth** with `better-auth` — secure login, registration, and session persistence
+- **Google OAuth Integration** — direct single sign-on (SSO) prompt with official Google Identity SDK
 - **Two distinct user roles**: `Founder` and `Collaborator` with role-specific dashboards
 - Session auto-recovery on page refresh via `/auth/me` endpoint
 - Redirect-aware login flows (`?from=` query param support)
