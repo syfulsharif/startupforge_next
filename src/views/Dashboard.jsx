@@ -99,6 +99,21 @@ export const Dashboard = () => {
       setLogoUploading(false);
     }
   };
+
+  useEffect(() => {
+    if (myActiveStartup) {
+      setStartupName(myActiveStartup.name || "");
+      setStartupLogo(myActiveStartup.logo || "🚀");
+      setStartupIndustry(myActiveStartup.industry || "SaaS");
+      setStartupDescription(myActiveStartup.description || "");
+      setStartupStage(myActiveStartup.fundingStage || "Pre-seed");
+      setStartupLocation(myActiveStartup.location || "Remote");
+      setStartupWebsite(myActiveStartup.website || "https://");
+      setStartupPitch(myActiveStartup.pitch || "");
+      setStartupTeamSize(myActiveStartup.teamSizeNeeded || 1);
+    }
+  }, [myActiveStartup]);
+
   const [startupDescription, setStartupDescription] = useState(myActiveStartup ? myActiveStartup.description : "");
   const [startupStage, setStartupStage] = useState(() => {
     return myActiveStartup ? myActiveStartup.fundingStage : "Pre-seed";
