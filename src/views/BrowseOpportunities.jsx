@@ -52,14 +52,20 @@ export const BrowseOpportunities = () => {
   };
 
   // Fetch when search query or filter values change (reset to page 1)
+  // When filters/search parameters change, reset page to 1.
+  // If page was already 1, trigger loadData manually because the page state won't change.
   useEffect(() => {
-    setPage(1);
+    if (page === 1) {
+      loadData();
+    } else {
+      setPage(1);
+    }
   }, [searchTerm, selectedIndustry, selectedWorkType, selectedCommitment, sortBy]);
 
-  // Fetch on page change or when load parameters change
+  // Trigger fetch when page number changes
   useEffect(() => {
     loadData();
-  }, [page, searchTerm, selectedIndustry, selectedWorkType, selectedCommitment, sortBy]);
+  }, [page]);
 
   return (
     <div className="min-h-screen bg-transparent text-slate-850 dark:text-slate-150 py-12 px-4 sm:px-6 lg:px-8 bg-grid-pattern">
