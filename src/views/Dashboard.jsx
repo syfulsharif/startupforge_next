@@ -631,6 +631,18 @@ export const Dashboard = () => {
             </div>
 
             <div className="space-y-1">
+              <label className="font-semibold text-slate-700 dark:text-slate-400">Founder Email Address *</label>
+              <input
+                type="email"
+                required
+                value={startupFounderEmail}
+                onChange={(e) => setStartupFounderEmail(e.target.value)}
+                placeholder="founder@company.com"
+                className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg p-2 text-slate-900 dark:text-white outline-none focus:border-indigo-500 font-mono"
+              />
+            </div>
+
+            <div className="space-y-1">
               <label className="font-semibold text-slate-700 dark:text-slate-400">Description Tagline *</label>
               <input
                 type="text"

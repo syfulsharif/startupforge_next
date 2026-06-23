@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useApp } from "../context/AppContext";
 import { useRouter } from "next/navigation";
 import { ShieldCheck, Code, BookOpen, Crown, ChevronRight } from "lucide-react";
 export const Profile = () => {
-  const { currentUser, updateProfileCV } = useApp();
+  const { currentUser, updateProfileCV, authLoading } = useApp();
   const router = useRouter();
   const [editMode, setEditMode] = useState(false);
   const [userName, setUserName] = useState(currentUser ? currentUser.name : "");
@@ -13,6 +13,12 @@ export const Profile = () => {
   const [userAvatar, setUserAvatar] = useState(currentUser ? currentUser.avatar : "");
   const [avatarUploading, setAvatarUploading] = useState(false);
   const [feedback, setFeedback] = useState("");
+
+  useEffect(() => {
+    if (!authLoading && !currentUser) {
+      router.push("/login?from=/profile");
+    }
+  }, [authLoading, currentUser, router]);
 
   const handleAvatarUpload = async (e) => {
     const file = e.target.files[0];
@@ -43,13 +49,8 @@ export const Profile = () => {
       setAvatarUploading(false);
     }
   };
-  if (!currentUser) {
-    return <div className="min-h-screen bg-transparent text-slate-900 dark:text-slate-100 flex flex-col justify-center items-center py-20 px-4">
-      <ShieldCheck className="w-16 h-16 text-indigo-500 dark:text-indigo-400 mb-4" />
-      <h2 className="font-display font-bold text-xl">Access Privately Guarded</h2>
-      <p className="text-xs text-slate-600 dark:text-slate-400 mt-2">Log in or select an active user profile to configure your identity page.</p>
-      <button onClick={() => router.push("/login")} className="mt-5 bg-primary text-white py-2 px-5 rounded-lg text-xs font-semibold">Login</button>
-    </div>;
+  if (authLoading || !currentUser) {
+    return null;
   }
   const handleUpdateProfile = async (e) => {
     e.preventDefault();

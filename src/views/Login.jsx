@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { useApp } from "../context/AppContext";
@@ -8,10 +8,30 @@ import {
   Eye,
   EyeOff,
   ChevronRight,
-  Zap
+  Zap,
+  Globe,
+  Chrome
 } from "lucide-react";
+
+const decodeJwt = (token) => {
+  try {
+    const base64Url = token.split(".")[1];
+    const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+    const jsonPayload = decodeURIComponent(
+      window.atob(base64)
+        .split("")
+        .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
+        .join("")
+    );
+    return JSON.parse(jsonPayload);
+  } catch (error) {
+    console.error("JWT Decode error:", error);
+    return null;
+  }
+};
+
 export const Login = () => {
-  const { login } = useApp();
+  const { login, googleLogin, currentUser, authLoading } = useApp();
   const router = useRouter();
   const searchParams = useSearchParams();
   const [email, setEmail] = useState("");
@@ -19,7 +39,60 @@ export const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  
+  // Google Loading State
+  const [googleLoading, setGoogleLoading] = useState(false);
+
   const from = searchParams.get("from") || "/dashboard";
+
+  useEffect(() => {
+    if (!authLoading && currentUser) {
+      router.replace("/dashboard");
+    }
+  }, [authLoading, currentUser, router]);
+
+  // Load Google GIS SDK on mount
+  useEffect(() => {
+    const scriptId = "google-gsi-client";
+    let script = document.getElementById(scriptId);
+    if (!script) {
+      script = document.createElement("script");
+      script.id = scriptId;
+      script.src = "https://accounts.google.com/gsi/client";
+      script.async = true;
+      script.defer = true;
+      document.body.appendChild(script);
+    }
+
+    const initGoogle = () => {
+      if (window.google?.accounts?.id) {
+        const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || "780289828922-fosql73vv34t51to901pe8lb7v4gtcj7.apps.googleusercontent.com";
+        window.google.accounts.id.initialize({
+          client_id: clientId,
+          callback: (response) => {
+            const decoded = decodeJwt(response.credential);
+            if (decoded) {
+              handleGoogleSelect(decoded.email, decoded.name, decoded.picture);
+            }
+          }
+        });
+        const buttonElement = document.getElementById("realGoogleButton");
+        if (buttonElement) {
+          window.google.accounts.id.renderButton(
+            buttonElement,
+            { theme: "outline", size: "large", width: 300 }
+          );
+        }
+      }
+    };
+
+    if (window.google?.accounts?.id) {
+      setTimeout(initGoogle, 150);
+    } else {
+      script.onload = initGoogle;
+    }
+  }, []);
+
   const handleManualLogin = async (e) => {
     e.preventDefault();
     setErrorMessage("");
@@ -34,6 +107,24 @@ export const Login = () => {
       router.replace(from);
     } else {
       setErrorMessage(res.message || "Credentials rejected. Invalid email or password.");
+    }
+  };
+
+  const handleGoogleSelect = async (selectedEmail, selectedName, selectedImage) => {
+    setGoogleLoading(true);
+    const res = await googleLogin(selectedEmail, selectedName, selectedImage, undefined, false);
+    setGoogleLoading(false);
+    if (res.success) {
+      router.replace(from);
+    } else {
+      if (res.isNotRegistered) {
+        setErrorMessage("Google account is not registered. Redirecting to sign up...");
+        setTimeout(() => {
+          router.push("/register");
+        }, 2000);
+      } else {
+        setErrorMessage(res.message || "Google Single Sign-in authentication failed.");
+      }
     }
   };
   return <div className="min-h-[85vh] bg-transparent text-slate-800 dark:text-slate-200 flex flex-col justify-center items-center py-12 px-4 sm:px-6 lg:px-8 bg-grid-pattern relative">
@@ -123,7 +214,15 @@ export const Login = () => {
 
         </form>
 
-        <div className="border-t border-slate-200 dark:border-slate-800 bg-transparent mt-6 pt-5 flex justify-center text-xxs text-slate-500 dark:text-slate-450 gap-1.5 select-none">
+        <div className="relative flex py-4 items-center animate-pulse">
+          <div className="flex-grow border-t border-slate-200 dark:border-slate-800"></div>
+          <span className="flex-shrink mx-4 text-slate-400 text-[10px] uppercase font-bold tracking-wider">or</span>
+          <div className="flex-grow border-t border-slate-200 dark:border-slate-800"></div>
+        </div>
+
+        <div id="realGoogleButton" className="w-full flex justify-center"></div>
+
+        <div className="border-t border-slate-200 dark:border-slate-800 bg-transparent mt-6 pt-5 flex justify-center text-xxs text-slate-500 dark:text-slate-455 dark:text-slate-450 gap-1.5 select-none">
           <span>New to group team building on StartupForge?</span>
           <Link href="/register" className="text-indigo-500 dark:text-indigo-400 hover:underline font-semibold">Create account &gt;</Link>
         </div>

@@ -208,12 +208,12 @@ export const AppProvider = ({ children }) => {
     }
   };
 
-  const googleLoginAction = async (email, name, image) => {
+  const googleLoginAction = async (email, name, image, role, isRegister = false) => {
     try {
       const res = await fetch(`${API_URL}/auth/google`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, name, image }),
+        body: JSON.stringify({ email, name, image, role, isRegister }),
         credentials: 'include'
       });
       const data = await res.json();
@@ -224,7 +224,7 @@ export const AppProvider = ({ children }) => {
         return { success: true };
       } else {
         addToast(data.message || 'Google Login failed.', 'error');
-        return { success: false, message: data.message };
+        return { success: false, isNotRegistered: data.isNotRegistered, message: data.message };
       }
     } catch (err) {
       addToast('Google Auth Network error.', 'error');
@@ -237,7 +237,7 @@ export const AppProvider = ({ children }) => {
       let body;
       let headers = {};
 
-      if (imageFile) {
+      if (imageFile && typeof imageFile !== 'string') {
         const formData = new FormData();
         formData.append('name', name);
         formData.append('email', email);
@@ -247,7 +247,11 @@ export const AppProvider = ({ children }) => {
         body = formData;
       } else {
         headers['Content-Type'] = 'application/json';
-        body = JSON.stringify({ name, email, password, role });
+        const payload = { name, email, password, role };
+        if (typeof imageFile === 'string') {
+          payload.image = imageFile;
+        }
+        body = JSON.stringify(payload);
       }
 
       const res = await fetch(`${API_URL}/auth/register`, {

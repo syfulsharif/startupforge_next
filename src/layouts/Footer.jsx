@@ -49,7 +49,7 @@ export const Footer = () => {
           Built For Quality
         </h3>
         <ul className="space-y-2 text-xs">
-          <li><span className="text-slate-500">React 19 & Vite 6</span></li>
+          <li><span className="text-slate-500">Next.js 15 & React 19</span></li>
           <li><span className="text-slate-500">Tailwind CSS v4</span></li>
           <li><span className="text-slate-500">Lucide High-Density Icons</span></li>
           <li><span className="text-slate-500">Framer Motion Transition States</span></li>
