@@ -49,12 +49,19 @@ export const AppProvider = ({ children }) => {
 
   // 1. Fetch current user session (Auto Login after Refresh)
   const fetchMe = async () => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      setCurrentUser(null);
+      setAuthLoading(false);
+      return;
+    }
+
     try {
       const res = await fetch(`${API_URL}/auth/me`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token') || ''}`
+          'Authorization': `Bearer ${token}`
         },
         credentials: 'include'
       });
@@ -63,6 +70,7 @@ export const AppProvider = ({ children }) => {
         setCurrentUser(data.user);
       } else {
         setCurrentUser(null);
+        localStorage.removeItem('token');
       }
     } catch (err) {
       console.error('Session check failed:', err);

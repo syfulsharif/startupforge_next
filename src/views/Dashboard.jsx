@@ -514,7 +514,7 @@ export const Dashboard = () => {
             <div className="glass-card rounded-2xl p-5 shadow-lg">
               <h3 className="font-display font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-4">Monthly Applicant Feed</h3>
               <div className="h-64 text-slate-800 text-xs">
-                <ResponsiveContainer width="100%" height="100%">
+                <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
                   <BarChart data={chartsApplicationData}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#2a3341" strokeOpacity={0.4} />
                     <XAxis dataKey="name" stroke="#64748b" />
@@ -529,7 +529,7 @@ export const Dashboard = () => {
             <div className="glass-card rounded-2xl p-5 shadow-lg">
               <h3 className="font-display font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-4">Team Size Expansion</h3>
               <div className="h-64 text-slate-800 text-xs">
-                <ResponsiveContainer width="100%" height="100%">
+                <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
                   <LineChart data={chartsTeamGrowthData}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#2a3341" strokeOpacity={0.4} />
                     <XAxis dataKey="name" stroke="#64748b" />
